@@ -206,9 +206,18 @@
         const hiddenNav = document.getElementById('hiddenNav');
         let navVisible = false;
         
-        nameTrigger.addEventListener('click', () => {
+        nameTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
             navVisible = !navVisible;
             hiddenNav.classList.toggle('visible', navVisible);
+        });
+
+        // Click anywhere to close nav menu
+        document.addEventListener('click', (e) => {
+            if (navVisible && !hiddenNav.contains(e.target) && e.target !== nameTrigger && !nameTrigger.contains(e.target)) {
+                navVisible = false;
+                hiddenNav.classList.remove('visible');
+            }
         });
 
         // Section navigation
