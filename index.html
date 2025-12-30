@@ -150,17 +150,11 @@
     </div>
 
     <script>
-        // Auto Day/Night Mode based on time
+        // Auto Day/Night Mode - Default to dark
         function updateTheme() {
-            const hour = new Date().getHours();
-            const isDaytime = hour >= 6 && hour < 19;
             const savedTheme = localStorage.getItem('theme');
-            
-            if (savedTheme) {
-                document.body.dataset.theme = savedTheme;
-            } else {
-                document.body.dataset.theme = isDaytime ? 'light' : 'dark';
-            }
+            // Always default to dark, only change if user explicitly set light
+            document.body.dataset.theme = savedTheme || 'dark';
         }
         
         // Theme Toggle
