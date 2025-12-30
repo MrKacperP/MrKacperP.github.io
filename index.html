@@ -24,6 +24,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body data-theme="dark">
+    <!-- Floating Wings Button -->
+    <a href="https://buy.stripe.com/cNibJ04896oxa3UdSz1wY05" target="_blank" rel="noopener" class="floating-wings" aria-label="Buy me wings">
+        <i class="fas fa-drumstick-bite"></i>
+    </a>
+
     <!-- CRT Effects -->
     <div class="crt-overlay"></div>
     <div class="scanlines"></div>
@@ -75,7 +80,7 @@
                 <a href="https://www.strava.com/athletes/68517111" target="_blank" rel="noopener" aria-label="Strava">
                     <i class="fab fa-strava"></i>
                 </a>
-                <a href="mailto:kacperprymicz@gmail.com" aria-label="Email">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kacperprymicz@gmail.com" target="_blank" rel="noopener" aria-label="Email">
                     <i class="fas fa-envelope"></i>
                 </a>
             </nav>
@@ -85,16 +90,38 @@
         <section class="panel" id="about">
             <button class="panel-close">&times;</button>
             <h2>About</h2>
-            <p>I build things that matter. Currently exploring the intersection of technology and creativity.</p>
+            <div class="about-content">
+                <p class="about-intro">I'm Kacper — a builder at heart who thrives at the intersection of technology, creativity, and the outdoors.</p>
+                <p>Whether I'm writing code, capturing moments on camera, or chasing powder days in the mountains, I approach everything with curiosity and a drive to create something meaningful.</p>
+                <p>I believe the best work happens when you combine technical skill with creative vision. That's why I build products that don't just work — they feel right.</p>
+                <div class="about-interests">
+                    <span class="interest-tag"><i class="fas fa-code"></i> Development</span>
+                    <span class="interest-tag"><i class="fas fa-mountain"></i> Adventure</span>
+                    <span class="interest-tag"><i class="fas fa-camera"></i> Content</span>
+                    <span class="interest-tag"><i class="fas fa-lightbulb"></i> Innovation</span>
+                </div>
+            </div>
         </section>
 
         <section class="panel" id="work">
             <button class="panel-close">&times;</button>
             <h2>Work</h2>
+            <p class="work-intro">Projects I've built and things I'm proud of.</p>
             <div class="work-grid">
                 <a href="https://snowd.ca" target="_blank" class="work-item">
                     <i class="fas fa-snowflake"></i>
                     <span>Snowd.ca</span>
+                    <small>Ski & Snow Platform</small>
+                </a>
+                <a href="https://github.com/MrKacperP" target="_blank" class="work-item">
+                    <i class="fab fa-github"></i>
+                    <span>Open Source</span>
+                    <small>Code & Projects</small>
+                </a>
+                <a href="https://www.youtube.com/@Kacper_Prymicz" target="_blank" class="work-item">
+                    <i class="fab fa-youtube"></i>
+                    <span>Content</span>
+                    <small>Videos & Stories</small>
                 </a>
             </div>
         </section>
@@ -102,7 +129,16 @@
         <section class="panel" id="contact">
             <button class="panel-close">&times;</button>
             <h2>Contact</h2>
-            <a href="mailto:kacperprymicz@gmail.com" class="contact-link">kacperprymicz@gmail.com</a>
+            <div class="contact-links">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kacperprymicz@gmail.com" target="_blank" rel="noopener" class="contact-link">
+                    <i class="fas fa-envelope"></i>
+                    kacperprymicz@gmail.com
+                </a>
+                <a href="tel:+14379223895" class="contact-link">
+                    <i class="fas fa-phone"></i>
+                    (437) 922-3895
+                </a>
+            </div>
         </section>
 
         <!-- Navigation Menu (hidden, triggered by name click) -->
@@ -143,26 +179,36 @@
         const headshot = document.querySelector('.bg-headshot img');
         
         document.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            const x = (e.clientX / window.innerWidth - 0.5) * 15;
+            const y = (e.clientY / window.innerHeight - 0.5) * 15;
             
-            if (name) name.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
-            if (headshot) headshot.style.transform = `translate(${x * -0.3}px, ${y * -0.3}px) scale(1.05)`;
+            if (name) name.style.transform = `translate(${x * 0.4}px, ${y * 0.4}px) scale(1.02)`;
+            if (headshot) headshot.style.transform = `scale(0.95) translate(${x * -0.2}px, ${y * -0.2}px)`;
         });
 
-        // Letter hover micro-movement
+        // Letter hover micro-movement with sound-like feedback
         const letters = document.querySelectorAll('.letter');
-        letters.forEach(letter => {
+        letters.forEach((letter, index) => {
             letter.addEventListener('mouseenter', () => {
-                letter.style.transform = `translateY(-${Math.random() * 4 + 2}px)`;
+                const randomY = Math.random() * 6 + 4;
+                const randomRotate = (Math.random() - 0.5) * 10;
+                letter.style.transform = `translateY(-${randomY}px) rotate(${randomRotate}deg) scale(1.1)`;
             });
             letter.addEventListener('mouseleave', () => {
-                letter.style.transform = 'translateY(0)';
+                letter.style.transform = 'translateY(0) rotate(0) scale(1)';
             });
+        });
+
+        // Name hover - triggers headshot color change
+        const nameTrigger = document.getElementById('name-trigger');
+        nameTrigger.addEventListener('mouseenter', () => {
+            document.body.classList.add('name-hover');
+        });
+        nameTrigger.addEventListener('mouseleave', () => {
+            document.body.classList.remove('name-hover');
         });
 
         // Name click reveals navigation
-        const nameTrigger = document.getElementById('name-trigger');
         const hiddenNav = document.getElementById('hiddenNav');
         let navVisible = false;
         
@@ -192,6 +238,15 @@
         document.querySelectorAll('.panel-close').forEach(btn => {
             btn.addEventListener('click', () => {
                 btn.closest('.panel').classList.remove('active');
+            });
+        });
+
+        // Click anywhere on panel background to close
+        document.querySelectorAll('.panel').forEach(panel => {
+            panel.addEventListener('click', (e) => {
+                if (e.target === panel) {
+                    panel.classList.remove('active');
+                }
             });
         });
 
