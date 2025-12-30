@@ -1,15 +1,204 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Prymicz Portfolio</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kacper Prymicz</title>
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <h1>Bolek Prymicz</h1>
-    <p>Welcome to my portfolio.</p>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <!-- CRT Effects -->
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="vignette"></div>
     
-      <a href="/about">About</a>
-      <a href="/projects">Projects</a>
-      <a href="/contact">Contact</a>
-  </body>
+    <!-- Theme Toggle - LEFT SIDE -->
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Background Headshot -->
+    <div class="bg-headshot">
+        <img src="headshot.png" alt="" loading="eager">
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <h1 class="name" id="name-trigger">
+                    <span class="letter">K</span><span class="letter">A</span><span class="letter">C</span><span class="letter">P</span><span class="letter">E</span><span class="letter">R</span>
+                    <br>
+                    <span class="letter">P</span><span class="letter">R</span><span class="letter">Y</span><span class="letter">M</span><span class="letter">I</span><span class="letter">C</span><span class="letter">Z</span>
+                </h1>
+                <p class="tagline">Builder. Creator. Explorer.</p>
+                <span class="click-hint">click name to explore</span>
+            </div>
+            
+            <!-- Social Icons -->
+            <nav class="social-links">
+                <a href="https://www.instagram.com/kacper_prymicz/" target="_blank" rel="noopener" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@Kacper_Prymicz" target="_blank" rel="noopener" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/kacper-prymicz/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://snowd.ca" target="_blank" rel="noopener" aria-label="Snowd Project">
+                    <i class="fas fa-snowflake"></i>
+                </a>
+                <a href="https://github.com/MrKacperP" target="_blank" rel="noopener" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.strava.com/athletes/68517111" target="_blank" rel="noopener" aria-label="Strava">
+                    <i class="fab fa-strava"></i>
+                </a>
+                <a href="mailto:kacperprymicz@gmail.com" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </nav>
+        </section>
+
+        <!-- Hidden Sections (revealed by clicking name) -->
+        <section class="panel" id="about">
+            <button class="panel-close">&times;</button>
+            <h2>About</h2>
+            <p>I build things that matter. Currently exploring the intersection of technology and creativity.</p>
+        </section>
+
+        <section class="panel" id="work">
+            <button class="panel-close">&times;</button>
+            <h2>Work</h2>
+            <div class="work-grid">
+                <a href="https://snowd.ca" target="_blank" class="work-item">
+                    <i class="fas fa-snowflake"></i>
+                    <span>Snowd.ca</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="panel" id="contact">
+            <button class="panel-close">&times;</button>
+            <h2>Contact</h2>
+            <a href="mailto:kacperprymicz@gmail.com" class="contact-link">kacperprymicz@gmail.com</a>
+        </section>
+
+        <!-- Navigation Menu (hidden, triggered by name click) -->
+        <nav class="hidden-nav" id="hiddenNav">
+            <a href="#about" data-section="about">About</a>
+            <a href="#work" data-section="work">Work</a>
+            <a href="#contact" data-section="contact">Contact</a>
+        </nav>
+    </div>
+
+    <script>
+        // Auto Day/Night Mode based on time
+        function updateTheme() {
+            const hour = new Date().getHours();
+            const isDaytime = hour >= 6 && hour < 19;
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme) {
+                document.body.dataset.theme = savedTheme;
+            } else {
+                document.body.dataset.theme = isDaytime ? 'light' : 'dark';
+            }
+        }
+        
+        // Theme Toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            const current = document.body.dataset.theme;
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.body.dataset.theme = next;
+            localStorage.setItem('theme', next);
+        });
+        
+        updateTheme();
+
+        // Parallax on mouse movement
+        const name = document.querySelector('.name');
+        const headshot = document.querySelector('.headshot');
+        
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            name.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
+            headshot.style.transform = `translate(${x * -0.3}px, ${y * -0.3}px)`;
+        });
+
+        // Letter hover micro-movement
+        const letters = document.querySelectorAll('.letter');
+        letters.forEach(letter => {
+            letter.addEventListener('mouseenter', () => {
+                letter.style.transform = `translateY(-${Math.random() * 4 + 2}px)`;
+            });
+            letter.addEventListener('mouseleave', () => {
+                letter.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Name click reveals navigation
+        const nameTrigger = document.getElementById('name-trigger');
+        const hiddenNav = document.getElementById('hiddenNav');
+        let navVisible = false;
+        
+        nameTrigger.addEventListener('click', () => {
+            navVisible = !navVisible;
+            hiddenNav.classList.toggle('visible', navVisible);
+        });
+
+        // Section navigation
+        const navLinks = document.querySelectorAll('.hidden-nav a');
+        const panels = document.querySelectorAll('.panel');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.dataset.section;
+                const panel = document.getElementById(sectionId);
+                
+                panels.forEach(p => p.classList.remove('active'));
+                panel.classList.add('active');
+                hiddenNav.classList.remove('visible');
+                navVisible = false;
+            });
+        });
+
+        // Close panels
+        document.querySelectorAll('.panel-close').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.closest('.panel').classList.remove('active');
+            });
+        });
+
+        // Headshot fade-in on load
+        headshot.addEventListener('load', () => {
+            headshot.classList.add('loaded');
+        });
+        
+        if (headshot.complete) {
+            headshot.classList.add('loaded');
+        }
+
+        // Headshot hover - fade name to back
+        const bgHeadshot = document.querySelector('.bg-headshot');
+        bgHeadshot.addEventListener('mouseenter', () => {
+            document.body.classList.add('headshot-hover');
+        });
+        bgHeadshot.addEventListener('mouseleave', () => {
+            document.body.classList.remove('headshot-hover');
+        });
+    </script>
+</body>
 </html>
